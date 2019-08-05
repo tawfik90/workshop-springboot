@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  pg-docker-container:
+    image: ghusta/postgres-world-db:2.3
+    volumes:
+      - /data/postgres
+    ports:
+      - 5432:5432
+    restart: always
+  app-container:
+    image: app-image
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - pg-docker-container
+    ports:
+      - 8087:8080
+    volumes:
+      - /data/workshop-springboot-tawfik
